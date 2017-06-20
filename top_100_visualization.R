@@ -6,6 +6,7 @@
 # 
 # Data source: BoxRec.com
 
+library(readr)
 library(igraph)
 library(networkD3)
 source('ranking_functions.R')

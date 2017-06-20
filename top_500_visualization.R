@@ -5,6 +5,7 @@
 # boxers ranked via a modified PageRank algorithm.
 # 
 # Data source: BoxRec.com
+library(readr)
 
 # Data loading and object creation.
 boxing.df <- read_csv("Data/AllLeagues.csv")
