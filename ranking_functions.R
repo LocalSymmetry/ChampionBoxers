@@ -179,8 +179,9 @@ RankBoxers <- function(boxer.df, decision.weights = rep(1, 8),
     warning('Matrix did not return largest eigenvalue 1. Returned value: ', 
             eigen.list$values)
   }
-  # Scale the eigenvector so the largest entry is 1.
-  ranks <- as.vector(Re(eigen.list$vectors) / max(Re(eigen.list$vectors)))
+  # Scale the eigenvector so the entires are positive and the largest is 1.
+  positive.eigenvector <- (Re(eigen.list$vectors) / Re(eigen.list$vectors[1]))
+  ranks <- as.vector(positive.eigenvector / max(positive.eigenvector))
   boxers.ranked.df <- data.frame(boxerid = dim.names, eigenvecscore = ranks)
   boxers.ranked.df <- boxers.ranked.df[order(boxers.ranked.df$eigenvecscore, 
                                              decreasing=TRUE),]
