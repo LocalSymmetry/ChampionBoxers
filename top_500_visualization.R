@@ -6,6 +6,14 @@
 # 
 # Data source: BoxRec.com
 library(readr)
+library(igraph)
+library(networkD3)
+source('ranking_functions.R')
+
+# Helper function to convert from igraph to networkD3.
+GetNodeID <- function(node.name){
+  which(node.name == V(top500.graph)$name) - 1
+}
 
 # Data loading and object creation.
 boxing.df <- read_csv("Data/AllLeagues.csv")
@@ -16,6 +24,7 @@ top500.boxerids <- as.vector(as.character(
 top500.boxernames <- as.vector(as.character(
   standard.ranked.boxers$boxername[1:500]))
 top500.raw.matrix <- raw.matrix[top500.boxerids, top500.boxerids]
+
 # Rename rows and columns of matrix to boxername.
 rownames(top500.raw.matrix) <- standard.ranked.boxers$boxername[
   which(standard.ranked.boxers$boxerid %in% rownames(top500.raw.matrix))]
@@ -29,7 +38,7 @@ top500.graph <- graph_from_adjacency_matrix(
 wt <- cluster_walktrap(top500.graph)
 members <- membership(wt)
 members.df <- data.frame('name'= names(members), 'group' = as.vector(members))
-# Convert igraph to node and link data frames for networkD3.
+# Convert igraph to node data frame for networkD3.
 top500.nodes <- data.frame(ID = c(0:(vcount(top500.graph) - 1)),
                            name = V(top500.graph)$name)
 # include group.
@@ -39,15 +48,14 @@ top500.nodes <- merge(top500.nodes,
                       standard.ranked.boxers[, c('boxername', 'eigenvecscore')],
                       by.x = 'name', by.y = 'boxername')
 top500.nodes <- top500.nodes[order(top500.nodes$ID, decreasing = FALSE), ]
-rownames(top500.nodes) <- NULL
-GetNodeID <- function(node.name){
-  which(node.name == V(top500.graph)$name) - 1
-}
+rownames(top500.nodes) <- NULL # Reset index
+
+# Convert igraph to link data frame for networkD3.
 top500.links <- get.data.frame(top500.graph, what = 'edges')
 top500.links$source <- sapply(top500.links$from, GetNodeID)
 top500.links$target <- sapply(top500.links$to, GetNodeID)
 top500.links <- top500.links[order(top500.links$source, decreasing = FALSE), ]
-rownames(top500.links) <- NULL
+rownames(top500.links) <- NULL # Reset index
 # Add the eigenvector score to the name in the visualization.
 top500.nodes$name <- paste(top500.nodes$name, 
                            format(top500.nodes$eigenvecscore, digits=4), 

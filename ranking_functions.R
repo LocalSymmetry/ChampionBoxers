@@ -163,7 +163,7 @@ RankBoxers <- function(boxer.df, decision.weights = rep(1, 8),
   #' SD, and TD. KO will be weighted 1.
   #' @param draw.weight The value between 0 and 1 to assign each boxer in the 
   #' event of a draw.
-  #' @param dampening.factor A probability, p, to dampen the stochastic matrix 
+  #' @param dampening.factor A probability to dampen the stochastic matrix 
   #' by.
   #' 
   #' @return A data frame with the boxer id and eigenvector score for each 
