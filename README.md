@@ -52,7 +52,7 @@ use the RankBoxers function to generate a ranking of the boxers using our modifi
 
 ## Data
 <a href="https://github.com/LocalSymmetry/ChampionBoxers/blob/master/Data/AllLeagues.csv">AllLeagues.csv</a> - Combined data of world title fight matches.
-### Variables
+
     division : The weight class of the fight.
     boxer1 : Name for the first boxer.
     boxer1id : BoxRec.com ID for the first boxer.
@@ -64,8 +64,9 @@ use the RankBoxers function to generate a ranking of the boxers using our modifi
     WinLoss : "W" if boxer 1 won. "L" if boxer 1 lost. 
       "D" if the fight ended in a draw.
 
+
 <a href="https://github.com/LocalSymmetry/ChampionBoxers/blob/master/Data/BoxerInfoByAttributes.csv">BoxerInfoByAttributes.csv</a> - World title fight boxer data. The file is encoded in UTF-8.
-### Variables
+
     boxerid: BoxRec.com URL for each boxer.
     boxername: The name of the boxer.
     alias: The alias used for the boxer in promotions.
@@ -98,8 +99,25 @@ use the RankBoxers function to generate a ranking of the boxers using our modifi
       won via KO's.
     boxerid.num: Numerical ID for the boxer. Aligned with BoxRec.com.
  
+ 
 <a href="https://github.com/LocalSymmetry/ChampionBoxers/blob/master/Data/StandardRanking.csv">StandardRanking.csv</a> - Generated ranking and eigenvector scores for world title fight boxers.
-### Variables
+
+    boxerid: BoxRec.com URL for each boxer.
+    boxername: The name of the boxer.
+    alias: The alias used for the boxer in promotions.
+    eigenvecscore: Eigenvector score from the modified PageRank algorithm.
+      Maximum score achievable is 1.
+    bouts: The number of bouts a boxer has fought in.
+    debut: Date the boxer debuted.
+    division: Weight class of the boxer.
+    KOs: Character format for percentage of fights for a boxer that are 
+      won via KO's.
+    rounds: The number of rounds the boxer has fought in.
+    stance: The boxing stance style: orthodox or southpaw.
+
+
+<a href="https://github.com/LocalSymmetry/ChampionBoxers/blob/master/Data/NonstandardRanking.csv">NonstandardRanking.csv</a> - Generated ranking and eigenvector scores for world title fight boxers with KO weighted by 1, TKO weighted by 0.9, and all other decisions weighted by 0.75.
+
     boxerid: BoxRec.com URL for each boxer.
     boxername: The name of the boxer.
     alias: The alias used for the boxer in promotions.
